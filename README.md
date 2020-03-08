@@ -5,7 +5,8 @@ This is a simple program for math class which generates a sequence of output for
 There are a couple of variants of the program, it currently runs as API but can be scaled as a micro service easily
 
 #Getting Started
-The APIs are testable through unit tests. You need to set up the project as a maven project and simply execute the tests
+The APIs are testable through unit tests. You need to set up the project as a maven project and simply execute the tests.
+The repository was created using Spring Initializr. There might be some extra utility code that can help build/run the code in different ways.
 
 ##Prerequisites
 *jdk 8
