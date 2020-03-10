@@ -1,9 +1,14 @@
-package com.akhi.math.mathassignment;
+package com.akhi.math.mathassignment.service;
 
+import com.akhi.math.mathassignment.ruleengine.RuleEngine;
+import com.akhi.math.mathassignment.ruleengine.RuleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -11,6 +16,8 @@ import java.util.stream.IntStream;
 public class NumberManipulationService {
     private static final Logger logger = LoggerFactory.getLogger(NumberManipulationService.class);
 
+    @Autowired
+    private RuleEngine ruleEngine;
     /**
      * Returns a systematic string equivalent output for passed range
      * of numbers (both inclusive) based on the Fizz/Buzz rule.
@@ -26,8 +33,8 @@ public class NumberManipulationService {
      * @param upperRange
      * @return
      */
-    public String convertMultiples(int lowerRange, int upperRange) {
-        return convertMultiples(lowerRange, upperRange, false);
+    public List<String> convertMultiples(int lowerRange, int upperRange) {
+        return convertMultiples(lowerRange, upperRange, RuleType.TYPE_1);
     }
 
     /**
@@ -36,10 +43,10 @@ public class NumberManipulationService {
      *
      * @param lowerRange
      * @param upperRange
-     * @param includeContains
+     * @param ruleType
      * @return
      */
-    public String convertMultiples(int lowerRange, int upperRange, boolean includeContains) {
+    private List<String> convertMultiples(int lowerRange, int upperRange, RuleType ruleType) {
 
         if (lowerRange <= 0 || upperRange <= 0) {
             throw new IllegalArgumentException("Negative numbers or zero not allowed");
@@ -48,33 +55,16 @@ public class NumberManipulationService {
             throw new IllegalArgumentException(String.format("Lower value %d, is less that upper value %d", lowerRange, upperRange));
         }
         return IntStream.rangeClosed(lowerRange, upperRange)
-                .mapToObj(x -> fizzCheck(x, includeContains) && buzzCheck(x, includeContains)? "FizzBuzz":
-                        fizzCheck(x, includeContains)? "Fizz":
-                                buzzCheck(x, includeContains)? "Buzz": ""+x) //TODO - possibly extract in a rule engine if we need additional flexibility and/or there are repetitive use cases
-                .collect(Collectors.joining(System.lineSeparator()));
+                .mapToObj((x) -> {
+                    StringJoiner j = new StringJoiner("").setEmptyValue(""+x);
 
-    }
+                    if(ruleEngine.isFizz(x, ruleType)) j.add("Fizz");
+                    if(ruleEngine.isBuzz(x, ruleType)) j.add("Buzz");
 
-    /**
-     * Checks for valid Fizz clause based on passed value and contains clause
-     *
-     * @param x
-     * @param includeContains
-     * @return
-     */
-    private boolean fizzCheck(int x, boolean includeContains) {
-        return x%3 == 0 || (includeContains && (""+ x).contains("3"));
-    }
+                    return j.toString();
+                })
+                .collect(Collectors.toList());
 
-    /**
-     * Checks for valid Fizz clause based on passed value and contains clause
-     *
-     * @param x
-     * @param includeContains
-     * @return
-     */
-    private boolean buzzCheck(int x, boolean includeContains) {
-        return x%5 == 0 || (includeContains && (""+ x).contains("5"));
     }
 
     /**
@@ -85,7 +75,7 @@ public class NumberManipulationService {
      * @param upperRange
      * @return
      */
-    public String convertMultiplesAndContainingNumbers(int lowerRange, int upperRange) {
-        return convertMultiples(lowerRange, upperRange, true);
+    public List<String> convertMultiplesAndContainingNumbers(int lowerRange, int upperRange) {
+        return convertMultiples(lowerRange, upperRange, RuleType.TYPE_2);
     }
 }

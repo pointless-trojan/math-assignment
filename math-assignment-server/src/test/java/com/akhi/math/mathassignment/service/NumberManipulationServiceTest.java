@@ -1,35 +1,33 @@
-package com.akhi.math.mathassignment;
+package com.akhi.math.mathassignment.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
-import java.util.StringJoiner;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootTest
-class MathAssignmentApplicationTests {
+class NumberManipulationServiceTest {
 	@Autowired
 	NumberManipulationService numberManipulationService;
 
 	@Test
 	void type1TestHappyPaths() {
 		Assertions.assertThat(numberManipulationService.convertMultiples(1, 3))
-				.isEqualTo(Stream.of("1", "2", "Fizz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz"));
 		Assertions.assertThat(numberManipulationService.convertMultiples(1, 5))
-				.isEqualTo(Stream.of("1", "2", "Fizz", "4", "Buzz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz"));
 		Assertions.assertThat(numberManipulationService.convertMultiples(1, 15))
-				.isEqualTo(Stream.of("1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz")
-						.collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"));
 	}
 
 	@Test
 	void type1And2EdgeCases() {
-		Assertions.assertThat(numberManipulationService.convertMultiples(1, 1)).isEqualTo("1");
-		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(1, 1)).isEqualTo("1");
+		Assertions.assertThat(numberManipulationService.convertMultiples(1, 1)).isEqualTo(Arrays.asList("1"));
+		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(1, 1)).isEqualTo(Arrays.asList("1"));
 	}
 
 	@Test
@@ -49,18 +47,17 @@ class MathAssignmentApplicationTests {
 	@Test
 	void type2TestHappyPaths() {
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(1, 3))
-				.isEqualTo(Stream.of("1", "2", "Fizz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz"));
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(1, 5))
-				.isEqualTo(Stream.of("1", "2", "Fizz", "4", "Buzz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz"));
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(1, 15))
-				.isEqualTo(Stream.of("1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "Fizz", "14", "FizzBuzz")
-						.collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "Fizz", "14", "FizzBuzz"));
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(25, 27))
-				.isEqualTo(Stream.of("Buzz", "26", "Fizz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("Buzz", "26", "Fizz"));
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(28, 35))
-				.isEqualTo(Stream.of("28", "29", "FizzBuzz", "Fizz", "Fizz", "Fizz", "Fizz", "FizzBuzz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("28", "29", "FizzBuzz", "Fizz", "Fizz", "Fizz", "Fizz", "FizzBuzz"));
 		Assertions.assertThat(numberManipulationService.convertMultiplesAndContainingNumbers(47, 55))
-				.isEqualTo(Stream.of("47", "Fizz", "49", "Buzz", "FizzBuzz", "Buzz", "FizzBuzz", "FizzBuzz", "Buzz").collect(Collectors.joining(System.lineSeparator())));
+				.isEqualTo(Arrays.asList("47", "Fizz", "49", "Buzz", "FizzBuzz", "Buzz", "FizzBuzz", "FizzBuzz", "Buzz"));
 	}
 	@Test
 	void type2NegativePaths() {
