@@ -16,7 +16,9 @@
 	<description>Demo project for Math Project</description>
 
 	<modules>
+		<module>math-assignment-model</module>
 		<module>math-assignment-server</module>
+		<module>math-assignment-sample-client</module>
 	</modules>
 	<properties>
 		<java.version>1.8</java.version>
@@ -44,13 +46,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

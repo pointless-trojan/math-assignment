@@ -1,0 +1,9 @@
+spring:
+  application:
+    admin:
+      jmx-port: 9901
+baseurl: http://localhost:8080
+server:
+  port: 9092
+admin:
+  jmx-port: 9901
